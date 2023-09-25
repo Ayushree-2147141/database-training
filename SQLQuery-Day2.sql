@@ -66,3 +66,34 @@ select st.firstName, st.lastName, stc.className
 from student st
 inner join studentclass stc
 on st.classId = stc.classId;
+
+
+-- Creating VIEW
+create view [GetStudentData] as
+select st.studentId, dbo.getFullName(st.studentId) as 'Full Name', stc.className
+from student st
+inner join studentclass stc
+on st.classId = stc.classId;
+
+select * from GetStudentData;
+
+--PROCEDURES
+--create proc Or create procedure
+
+create procedure InsertData
+(
+@firstName varchar(100),
+@lastName varchar(100),
+@classId int
+)
+as
+begin  
+insert into student(firstName, lastName, classId) values(@firstName, @lastName, @classId)
+end
+
+-- executing the procedure
+exec InsertData 'Tanushree','Chakrabartty', 1
+
+select * from student;
+
+-- drop proc InsertData;
