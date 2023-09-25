@@ -96,4 +96,36 @@ exec InsertData 'Tanushree','Chakrabartty', 1
 
 select * from student;
 
--- drop proc InsertData;
+--truncate table student;
+--drop proc InsertData;
+
+-- IF ELSE
+
+--altering the insertdata procedure classId from int to varchar
+--alter procedure <procedure-name> <body>
+create procedure InsertDataID
+(
+@firstName varchar(100),
+@lastName varchar(100),
+@className varchar(100)
+)
+as
+begin  
+	if((select count(*) from studentclass where className = @className) > 0)
+		begin
+			insert into student(firstName, lastName, classId) values(@firstName, @lastName, (select classId from studentclass where className = @className))
+		end
+	else
+		begin
+			insert into studentclass(className) values(@className);
+			insert into student(firstName, lastName, classId) values(@firstName, @lastName, @@IDENTITY);
+		end
+end
+
+exec InsertDataID 'Test1', 'Name1' , 'X'
+
+select * from student;
+select * from studentclass;
+
+delete from student where classId = 7;
+-- drop procedure InsertDataID
