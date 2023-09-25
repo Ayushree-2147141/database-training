@@ -5,17 +5,17 @@ create table student
 (studentId int identity(1,1), 
 firstName varchar(100), 
 lastName varchar(100), 
-className int, 
+classId int, 
 createdOn datetime default getdate(), 
 primary key(studentId));
 
 --select getdate()
 
-insert into student(firstName, lastName, className) values('Ayushree', 'Chakrabartty', 2);
-insert into student(firstName, lastName, className) values('Hrishik', 'Kumar', 1);
-insert into student(firstName, lastName, className) values('Renil', 'Justin', 3);
-insert into student(firstName, lastName, className) values('Akash', 'Singh', 1);
-insert into student(firstName, lastName, className) values('Reuben', 'Kurian', 3);
+insert into student(firstName, lastName, classId) values('Ayushree', 'Chakrabartty', 2);
+insert into student(firstName, lastName, classId) values('Hrishik', 'Kumar', 1);
+insert into student(firstName, lastName, classId) values('Renil', 'Justin', 3);
+insert into student(firstName, lastName, classId) values('Akash', 'Singh', 1);
+insert into student(firstName, lastName, classId) values('Reuben', 'Kurian', 3);
 
 select * from student;
 
@@ -47,3 +47,22 @@ select dbo.getFullName(studentId) as FullName from student;
 -- returns one particular
 -- no need to use 'from student' since direct value is being passed
 select dbo.getFullName(2) as 'Full Name' 
+
+create table studentclass 
+(
+classId int identity(1,1),
+className varchar(20),
+primary key(classId)
+)
+
+insert into studentclass (className) values('MCA');
+insert into studentclass (className) values('MDS');
+insert into studentclass (className) values('MBA');
+
+select * from studentClass;
+
+
+select st.firstName, st.lastName, stc.className
+from student st
+inner join studentclass stc
+on st.classId = stc.classId;
